@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Modern Calculator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:"Poppins",sans-serif;
+    }
+
+    body{
+
+      height:100vh;
+
+      display:flex;
+
+      justify-content:center;
+
+      align-items:center;
+
+      background:
+      linear-gradient(
+      135deg,
+      #0f172a,
+      #111827,
+      #1e293b
+      );
+
+      overflow:hidden;
+
+    }
+
+    /* Calculator Box */
+
+    .calbox{
+
+      width:360px;
+
+      padding:25px;
+
+      border-radius:30px;
+
+      background:
+      rgba(255,255,255,0.06);
+
+      backdrop-filter:blur(18px);
+
+      border:
+      1px solid rgba(255,255,255,0.08);
+
+      box-shadow:
+      0 15px 40px rgba(0,0,0,0.45);
+
+    }
+
+    /* Display */
+
+    #input{
+
+      width:100%;
+
+      height:90px;
+
+      border:none;
+
+      outline:none;
+
+      border-radius:20px;
+
+      background:
+      rgba(255,255,255,0.08);
+
+      color:white;
+
+      font-size:38px;
+
+      text-align:right;
+
+      padding:20px;
+
+      margin-bottom:25px;
+
+      box-shadow:
+      inset 0 4px 10px rgba(0,0,0,0.3);
+
+    }
+
+    /* Button Layout */
+
+    .buttons{
+
+      display:grid;
+
+      grid-template-columns:
+      repeat(4,1fr);
+
+      gap:15px;
+
+    }
+
+    /* Buttons */
+
+    button{
+
+      height:70px;
+
+      border:none;
+
+      border-radius:18px;
+
+      font-size:24px;
+
+      font-weight:500;
+
+      cursor:pointer;
+
+      color:white;
+
+      background:
+      rgba(255,255,255,0.08);
+
+      transition:0.3s;
+
+      box-shadow:
+      0 6px 15px rgba(0,0,0,0.25);
+
+    }
+
+    button:hover{
+
+      transform:
+      translateY(-3px);
+
+      background:
+      rgba(255,255,255,0.15);
+
+    }
+
+    /* Operator Buttons */
+
+    .operator{
+
+      background:
+      linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+      );
+
+    }
+
+    .operator:hover{
+
+      opacity:0.9;
+
+    }
+
+    /* Equal Button */
+
+    .equal{
+
+      background:
+      linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+      );
+
+    }
+
+    /* Responsive */
+
+    @media(max-width:450px){
+
+      .calbox{
+
+        width:90%;
+
+        padding:20px;
+
+      }
+
+      button{
+
+        height:60px;
+
+        font-size:20px;
+
+      }
+
+      #input{
+
+        font-size:30px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="calbox">
+
+    <!-- Display -->
+
+    <input id="input"
+           type="text"
+           readonly>
+
+    <!-- Buttons -->
+
+    <div class="buttons">
+
+      <button class="operator">
+        AC
+      </button>
+
+      <button class="operator">
+        ←
+      </button>
+
+      <button class="operator">
+        %
+      </button>
+
+      <button class="operator">
+        ÷
+      </button>
+
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+
+      <button class="operator">
+        ×
+      </button>
+
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+
+      <button class="operator">
+        -
+      </button>
+
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+
+      <button class="operator">
+        +
+      </button>
+
+      <button>00</button>
+      <button>0</button>
+      <button>.</button>
+
+      <button class="equal">
+        =
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const input =
+    document.getElementById("input");
+
+    const buttons =
+    document.querySelectorAll("button");
+
+    let expression = "";
+
+    buttons.forEach((btn)=>{
+
+      btn.addEventListener("click",()=>{
+
+        let value =
+        btn.innerText;
+
+        // Clear
+
+        if(value === "AC"){
+
+          expression = "";
+
+          input.value = "";
+
+        }
+
+        // Backspace
+
+        else if(value === "←"){
+
+          expression =
+          expression.slice(0,-1);
+
+          input.value =
+          expression;
+
+        }
+
+        // Equal
+
+        else if(value === "="){
+
+          try{
+
+            expression =
+            eval(
+            expression
+            .replace(/÷/g,"/")
+            .replace(/×/g,"*")
+            );
+
+            input.value =
+            expression;
+
+          }
+
+          catch{
+
+            input.value =
+            "Error";
+
+            expression = "";
+
+          }
+
+        }
+
+        // Other Buttons
+
+        else{
+
+          expression += value;
+
+          input.value =
+          expression;
+
+        }
+
+      });
+
+    });
+
+  </script>
+
+</body>
+
+</html>
